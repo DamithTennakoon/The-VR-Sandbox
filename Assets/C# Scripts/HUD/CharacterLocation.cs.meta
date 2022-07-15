@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d3feda334264e48bc931e4ea3aa14289
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - CharacterPosition: {instanceID: 0}
+  - LongitudeText: {instanceID: 0}
+  - LatitudeText: {instanceID: 0}
+  - Elevation: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
