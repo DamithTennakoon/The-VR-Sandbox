@@ -17,7 +17,7 @@ public class TeleportDoors : MonoBehaviour
     public GameObject DoorB;
 
     // Define Game Object for Sensor
-    public Collider Sensor;
+    //public Collider Sensor;
 
     // Define Boolean to detect player interaction
     public bool PlayerDetected;
@@ -34,7 +34,7 @@ public class TeleportDoors : MonoBehaviour
     public Vector3 DoorBPos;
 
     // Define varible to control door open speed
-    public float DoorOpenSpeed = 3f;
+    public float DoorOpenSpeed = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -42,55 +42,68 @@ public class TeleportDoors : MonoBehaviour
         // Instantiate initiate position of doors to Vector3 variables
         DoorAPos = DoorA.transform.position;
         DoorBPos = DoorB.transform.position;
-        
+
+        Debug.Log(DoorAPos);
+
+        // Instantiate state of sensor and door
+        PlayerDetected = false;
+        Opening = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check to see if player is here or not
-        SensorOnTrigger(Sensor);
-        SensorOffTrigger(Sensor);
-
         // Open the door if the player is detected and if door is not fully open
         if (PlayerDetected)
         {
+            /*
             if (DoorA.transform.position.z < DoorAPos[2] + MaxOpenDistance)
             {
-                if (DoorB.transform.position.z > DoorBPos[2] - MaxOpenDistance)
-                {
-                    DoorA.transform.Translate(DoorAPos[0], DoorAPos[1], DoorOpenSpeed * Time.deltaTime);
-                    DoorB.transform.Translate(DoorBPos[0], DoorBPos[1], -1 * DoorOpenSpeed * Time.deltaTime);
-                }
+                DoorA.transform.Translate(new Vector3(DoorAPos.x, DoorAPos.y, DoorAPos.z), Space.Self);
+
             }
+
+            if (DoorB.transform.position.z > DoorBPos[2] - MaxOpenDistance)
+            {
+                DoorB.transform.Translate(0, -1 * DoorOpenSpeed * Time.deltaTime, 0, Space.Self);
+            }
+            */
+
+            DoorA.transform.position = new Vector3(DoorAPos.x, DoorAPos.y, DoorAPos.z + MaxOpenDistance);
+            DoorB.transform.position = new Vector3(DoorBPos.x, DoorBPos.y, DoorBPos.z - MaxOpenDistance);
+
         }
         else
-        {
+        {   /*
             if (DoorA.transform.position.z > DoorAPos[2])
             {
                 if (DoorA.transform.position.z < DoorBPos[2])
                 {
                     // For now do nothing
                 }
-            }
+            }*/
+            DoorA.transform.position = DoorAPos;
+            DoorB.transform.position = DoorBPos;
         }
     }
 
     // Function checks if the player is at the sensor
-    private void SensorOnTrigger(Collider Object)
+    private void OnTriggerEnter(Collider Sensor)
     {
-        if (Object.gameObject.tag == "Player")
+        if (Sensor.gameObject.tag == "Player")
         {
             PlayerDetected = true;
         }
     }
 
     // Function check if the player is not at the sensor
-    private void SensorOffTrigger(Collider Object)
+    private void OnTriggerExit(Collider Sensor)
     {
-        if (Object.gameObject.tag != "Player")
+        if (Sensor.gameObject.tag == "Player")
         {
             PlayerDetected = false;
         }
     }
+
 }
