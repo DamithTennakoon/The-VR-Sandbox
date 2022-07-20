@@ -7,7 +7,7 @@ using UnityEngine;
 public class TeleportPads : MonoBehaviour
 {
     // Define Game Object for destination teleportation pad
-    public GameObject DestinationPad;
+   // public GameObject DestinationPad;
 
     // Define Game Object for character controller
     public GameObject CharacterController;
@@ -28,8 +28,8 @@ public class TeleportPads : MonoBehaviour
         // Teleport the character controller to destination if on teleport pad
         if (PlayerDetected)
         {
-            Vector3 DestinationPos = DestinationPad.transform.position;
-            CharacterController.transform.position = new Vector3(-24.8600006f, -3.44000006f, -4.51999998f);
+            //Vector3 DestinationPos = DestinationPad.transform.position;
+            CharacterController.transform.position = new Vector3(-1.98000002f, 1.73000002f, 0.280000001f);
         }
         else
         {

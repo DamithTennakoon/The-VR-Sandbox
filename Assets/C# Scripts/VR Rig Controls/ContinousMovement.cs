@@ -47,6 +47,7 @@ public class ContinousMovement : MonoBehaviour
         // Access device through node
         InputDevice Device = InputDevices.GetDeviceAtXRNode(InputSource);
         Device.TryGetFeatureValue(CommonUsages.primary2DAxis, out InputAxis);
+    
     }
 
     // Movement will be computed each time unity updates the our physics
