@@ -3479,7 +3479,7 @@ GameObject:
   - component: {fileID: 704428725}
   - component: {fileID: 704428724}
   - component: {fileID: 704428723}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3550,7 +3550,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 704428724}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3277615461971526422}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: MechEngLab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &704428724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5693,7 +5705,7 @@ GameObject:
   - component: {fileID: 1179129010}
   - component: {fileID: 1179129012}
   - component: {fileID: 1179129011}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10491,6 +10503,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8111176609221621755, guid: ec28386be7c414f5f9e62805703eadb3,
+        type: 3}
+      propertyPath: Speed
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8111176609221621758, guid: ec28386be7c414f5f9e62805703eadb3,
         type: 3}
       propertyPath: m_Name
@@ -10570,6 +10587,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 17.787
       objectReference: {fileID: 0}
+    - target: {fileID: 2085385105560860512, guid: 50d25e636427b4f8388ef4992d3b4e93,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3025479295238503224, guid: 50d25e636427b4f8388ef4992d3b4e93,
         type: 3}
       propertyPath: m_Camera
@@ -10611,6 +10633,43 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3277615461971526416}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3277615461971526421 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2085385105560860512, guid: 50d25e636427b4f8388ef4992d3b4e93,
+    type: 3}
+  m_PrefabInstance: {fileID: 3277615461971526416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3277615461971526422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3277615461971526421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801e44f3ed5be4f378110a4718a37d4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3277615461971526426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3277615461971526421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
 --- !u!1001 &3559893491774864759
 PrefabInstance:
   m_ObjectHideFlags: 0
