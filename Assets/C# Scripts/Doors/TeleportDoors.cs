@@ -20,18 +20,18 @@ public class TeleportDoors : MonoBehaviour
     //public Collider Sensor;
 
     // Define Boolean to detect player interaction
-    public bool PlayerDetected;
+    bool PlayerDetected;
 
     // Define Boolean for sate of door
-    public bool Opening;
+    bool Opening;
 
     // NOTE: Max displacement = 1.698 +/- Z
     // Define variable for maximum door opening distance
     public float MaxOpenDistance = 1.698f;
 
     // Define variables to get inititial position of doors
-    public Vector3 DoorAPos;
-    public Vector3 DoorBPos;
+    Vector3 DoorAPos;
+    Vector3 DoorBPos;
 
     // Define varible to control door open speed
     public float DoorOpenSpeed = 2f;
@@ -57,34 +57,37 @@ public class TeleportDoors : MonoBehaviour
         // Open the door if the player is detected and if door is not fully open
         if (PlayerDetected)
         {
+            
+            if (DoorA.transform.position.z < DoorAPos[1] + MaxOpenDistance)
+            {
+                DoorA.transform.Translate(0f, DoorOpenSpeed * Time.deltaTime, 0f) ;
+
+            }
+
+            if (DoorB.transform.position.z > DoorBPos[1] - MaxOpenDistance)
+            {
+                DoorB.transform.Translate(0f, -1f * DoorOpenSpeed * Time.deltaTime, 0f);
+            }
+            
             /*
-            if (DoorA.transform.position.z < DoorAPos[2] + MaxOpenDistance)
-            {
-                DoorA.transform.Translate(new Vector3(DoorAPos.x, DoorAPos.y, DoorAPos.z), Space.Self);
-
-            }
-
-            if (DoorB.transform.position.z > DoorBPos[2] - MaxOpenDistance)
-            {
-                DoorB.transform.Translate(0, -1 * DoorOpenSpeed * Time.deltaTime, 0, Space.Self);
-            }
-            */
-
             DoorA.transform.position = new Vector3(DoorAPos.x, DoorAPos.y, DoorAPos.z + MaxOpenDistance);
             DoorB.transform.position = new Vector3(DoorBPos.x, DoorBPos.y, DoorBPos.z - MaxOpenDistance);
-
+            */
         }
         else
-        {   /*
-            if (DoorA.transform.position.z > DoorAPos[2])
+        {   
+            if (DoorA.transform.position.z > DoorAPos[1])
             {
-                if (DoorA.transform.position.z < DoorBPos[2])
+                if (DoorA.transform.position.z < DoorBPos[1])
                 {
                     // For now do nothing
                 }
-            }*/
+            }
+
+            /*
             DoorA.transform.position = DoorAPos;
             DoorB.transform.position = DoorBPos;
+            */
         }
     }
 
