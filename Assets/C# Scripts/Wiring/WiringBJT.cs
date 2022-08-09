@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// Import UI tools
+using UnityEngine.UI;
 
-// Goal: Manually check the states of each drop zone mesh renderer
+// Goal: Check for wire connections in BJT avitivity to control DC motor
 
-public class WiringLED : MonoBehaviour
+public class WiringBJT : MonoBehaviour
 {
     // Define Game Objects for each wire and its corresponding points
     public GameObject[] wires;
@@ -13,10 +15,13 @@ public class WiringLED : MonoBehaviour
     private int[] states;
 
     // Define Game Object for LED filament
-    public GameObject Filament;
+    public GameObject Prop;
 
-    // Define Material objects for on/off states of LED
-    public Material FilamentOn, FilamentOff;
+    // Define Slider object for PWM input slider
+    public Slider PWM;
+
+    // Define Text object to store text of button
+    public Text buttonText;
 
     // Define Game object array to store the lines of wires
     public GameObject[] lineRender;
@@ -30,9 +35,6 @@ public class WiringLED : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set filament off to when the game starts
-        Filament.GetComponent<MeshRenderer>().material = FilamentOff;
-
         // Initialize states array to 0
         states = new int[wires.Length];
 
@@ -49,6 +51,7 @@ public class WiringLED : MonoBehaviour
 
         // Initialize connection state to false
         connecionState = false;
+
     }
 
     // Update is called once per frame
@@ -60,18 +63,22 @@ public class WiringLED : MonoBehaviour
         // Change the filament material if the circuit is closed
         if (SumArray(states) >= wires.Length)
         {
-            Filament.GetComponent<MeshRenderer>().material = FilamentOn;
+            // Rotatate prop at constant speed
+            Prop.transform.Rotate(Vector3.up * Time.deltaTime * PWM.value * 10);
 
             // Change the state of connection to true
             connecionState = true;
         }
         else
         {
-            Filament.GetComponent<MeshRenderer>().material = FilamentOff;
+            // Slow back to down to 0 over time ()
 
             // Change the state of connection to false
             connecionState = false;
         }
+
+        // Update the button text to the value of the PWM signal
+        buttonText.text = PWM.value.ToString();
 
         // Change state of material based on conncetion state
         wireMaterial(connecionState, lineRender);
@@ -123,15 +130,4 @@ public class WiringLED : MonoBehaviour
             }
         }
     }
-
-    /*
-    IEnumerator Test()
-    {
-        for (int i = 0; i <= 6; i++)
-        {
-            Debug.Log(i);
-            yield return null;
-        }
-    }
-    */
 }
