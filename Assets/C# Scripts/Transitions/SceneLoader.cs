@@ -28,7 +28,7 @@ public class SceneLoader : MonoBehaviour
     // Create function to switch to the "Mechanical Engineering Lab" scene
     public void MechEngLab()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 5);
     }
 
     // Create function to switch to the "Elecrtrical Engineering Lab" scene

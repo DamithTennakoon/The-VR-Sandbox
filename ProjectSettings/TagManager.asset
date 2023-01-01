@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SeriesConnection
   - Celestial
+  - Arduino
   layers:
   - Default
   - TransparentFX
