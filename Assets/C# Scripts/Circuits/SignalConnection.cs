@@ -39,13 +39,13 @@ public class SignalConnection : MonoBehaviour
     }
 
     // Detect if Arduino has been removed ~ unplugged
-    
+    /*
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Arduino")
         {
             Display.enabled = false;
         }
-    }
+    }*/
     
 }
