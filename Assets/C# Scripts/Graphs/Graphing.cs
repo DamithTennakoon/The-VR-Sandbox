@@ -26,6 +26,9 @@ public class Graphing : MonoBehaviour
     public float width;
     private float height;
 
+    // Define Slider object for D2
+    public Slider d2Slider;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +80,7 @@ public class Graphing : MonoBehaviour
         // Create a function in which an array of 0-5V is written for n-samples
 
         //int numHigh = (numPoints+1) - setPWM;
+        setPWM = (int) d2Slider.value;
         int numHigh = setPWM;
 
 

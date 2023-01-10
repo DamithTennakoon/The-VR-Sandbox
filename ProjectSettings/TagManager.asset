@@ -8,6 +8,7 @@ TagManager:
   - Celestial
   - Arduino
   - Graph Lines
+  - Labels
   layers:
   - Default
   - TransparentFX
