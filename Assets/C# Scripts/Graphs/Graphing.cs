@@ -6,6 +6,8 @@ using CodeMonkey.Utils;
 
 // Goal: Spawn 5 circle sprites on the display, equally spaced out on the canvas
 
+// To-do: > Incoorperate yMin into graph > Seperate classes for data transfer > Code cleanup
+
 public class Graphing : MonoBehaviour
 {
     [SerializeField] private GameObject CircleSprite;
@@ -20,15 +22,14 @@ public class Graphing : MonoBehaviour
     int setPWM = 15;
 
     // Define the max/min y-values of the display canvas
-    float maxY = 6.0f; // 6V
-    float minY = 0.0f; // 0V
+    float maxY = 5.0f; // Voltage
+    float minY = 0.0f; // Voltage
 
     public float width;
     private float height;
 
     // Define Slider object for D2
     public Slider d2Slider;
-
 
     // Start is called before the first frame update
     void Start()
@@ -197,4 +198,5 @@ public class Graphing : MonoBehaviour
         }
 
     }
+
 }
