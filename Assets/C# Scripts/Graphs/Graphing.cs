@@ -30,24 +30,22 @@ public class Graphing : MonoBehaviour
 
     // Define Slider object for D2
     public Slider d2Slider;
+    private float[] yAxis;
+    //int numPoints = 6 - 1; // n - 1 points will be spawned
 
     // Start is called before the first frame update
     void Start()
     {
 
-        xPoints = new float[numPoints + 1];
-        yPoints = new float[numPoints + 1];
-        width = displayCanvas.GetComponent<RectTransform>().rect.width;
-        height = displayCanvas.GetComponent<RectTransform>().rect.height;
-        gameObjects = new GameObject[numPoints + 1];
-        lineObjects = new GameObject[numPoints];
+        yAxis = new float[numPoints];
+        float width = displayCanvas.GetComponent<RectTransform>().rect.width;
+        float height = displayCanvas.GetComponent<RectTransform>().rect.height;
 
         float xPos = 0.0f;
         float yPos = 0.0f;
 
         GameObject lastPointObject = null;
 
-        
         for (int i = 0; i <= numPoints; i++) {
 
             GameObject SpawnedSprite = Instantiate(CircleSprite, new Vector3(xPos, yPos, 0), Quaternion.identity);
@@ -57,22 +55,13 @@ public class Graphing : MonoBehaviour
             xPos += widthSpacing;
             yPos += heightSpacing;
 
-            
             if (lastPointObject != null) {
                 lineConnection(lastPointObject.GetComponent<RectTransform>().anchoredPosition, SpawnedSprite.GetComponent<RectTransform>().anchoredPosition);
             }
 
             lastPointObject = SpawnedSprite;
 
-            gameObjects[i] = SpawnedSprite;
-
-            //SpawnedSprite.GetComponent<RectTransform>().anchoredPosition = new Vector3(0.02f, 0.02f, 0.0f);
-
         }
-
-        lineObjects = GameObject.FindGameObjectsWithTag("Graph Lines");
-        Debug.Log("LOOOOOOOOOOOOOOOL: " + lineObjects[3].GetComponent<RectTransform>().anchoredPosition.x);
-        Debug.Log(lineObjects.Length);
     }
 
     // Update is called once per frame
@@ -95,108 +84,24 @@ public class Graphing : MonoBehaviour
             yPoints[i] = 0.0f;
         }
 
-        graphPoints(xPoints, yPoints, gameObjects);
+        //graphPoints(xPoints, yPoints, gameObjects);
 
         //Debug.Log("Length of y set: " + yPoints.Length + " and length of gameO: " + gameObjects.Length);
+        
     }
 
     // Draws a line from each point on the graph.
     private void lineConnection(Vector3 point1, Vector3 point2) {
-
         GameObject lineImage = new GameObject("dotConnection", typeof(Image));
         lineImage.transform.SetParent(displayCanvas.transform, false);
         RectTransform imageRectTransform = lineImage.GetComponent<RectTransform>();
-        Vector3 dir = (point2 - point1).normalized; //*
-        float distance = Vector3.Distance(point1, point2); //*
+        Vector3 dir = (point2 - point1).normalized;
+        float distance = Vector3.Distance(point1, point2);
         imageRectTransform.anchorMin = new Vector2(0.0f, 0.0f);
         imageRectTransform.anchorMax = new Vector2(0.0f, 0.0f);
-        imageRectTransform.sizeDelta = new Vector2(distance, 0.02f); //*
-        imageRectTransform.anchoredPosition = point1 + dir * distance * 0.5f; //*
-        imageRectTransform.localEulerAngles = new Vector3(0.0f, 0.0f, UtilsClass.GetAngleFromVectorFloat(dir)); //*
-        lineImage.tag = "Graph Lines";
-    }
-
-    // Convert an input value to fit in the display canvas - for the y-axis
-    private float convertValue(float inputValue) {
-
-        float outputValue = 0.0f; // Initialize output variable
-        outputValue = (inputValue / maxY) * height; // Conversion factor
-        Debug.Log("Voltage:" + inputValue);
-        return outputValue;
-    }
-
-    // Convert array into points on the display and draw lines between points
-    private void graphPoints(float[] xData, float[] yData, GameObject[] objectsArray) {
-
-        for (int j = 0; j < xData.Length; j++) {
-            xData[j] = (j / xData.Length) * width; // Iteration converted to x-coordinate on display canvas
-            yData[j] = convertValue(yData[j]); // Votlage value converted to y-coordinate on display canvas
-            Debug.Log("width: " + width);
-
-            if (j != 0)
-            {
-                xData[j] = xData[j - 1] + (width / numPoints);
-            }
-            else {
-                xData[j] = 0.0f;
-            }
-        }
-
-        Debug.Log("-----BREAK");
-
-        // Plot the data on the display canvas
-        GameObject lastSpawnedObject = null;
-
-        for (int i = 0; i < objectsArray.Length; i++) {
-
-            //GameObject SpawnedSprite = Instantiate(CircleSprite, new Vector3(xData[i], yData[i], 0), Quaternion.identity);
-            //SpawnedSprite.transform.SetParent(displayCanvas.transform, false);
-
-            objectsArray[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(xData[i], yData[i], 0.0f);
-            //Debug.Log(gameObjects[i].GetComponent<RectTransform>().anchoredPosition);
-
-            /*
-            if (lastSpawnedObject != null)
-            {
-                lineConnection(lastSpawnedObject.GetComponent<RectTransform>().anchoredPosition, SpawnedSprite.GetComponent<RectTransform>().anchoredPosition);
-            }*/
-
-            //lastSpawnedObject = SpawnedSprite;
-
-        }
-
-        // Update the positions of the line objects
-        changedLineConnection(xData, yData, gameObjects, lineObjects);
-
-    }
-
-    // Update the position of the generated lines
-    private void changedLineConnection(float[] xPoints, float[] yPoints, GameObject[] points, GameObject[] lines)
-    {
-        GameObject prevPointObject = null;
-
-        for (int i = 0; i <= numPoints; i++) {
-            //RectTransform lineRectTranform = lines[i].GetComponent<RectTransform>();
-
-            //Vector3 point1 = prevPointObject.GetComponent<RectTransform>().anchoredPosition;
-            //Vector3 point2 = points[i].GetComponent<RectTransform>().anchoredPosition;
-
-            if (prevPointObject != null) {
-                Vector3 point1 = prevPointObject.GetComponent<RectTransform>().anchoredPosition;
-                Vector3 point2 = points[i].GetComponent<RectTransform>().anchoredPosition;
-
-                Vector3 dir = (point2 - point1).normalized; //*
-                float distance = Vector3.Distance(point1, point2); //*
-
-                
-                lines[i-1].GetComponent<RectTransform>().sizeDelta = new Vector2(distance, 0.02f); //*
-                lines[i-1].GetComponent<RectTransform>().anchoredPosition = point1 + dir * distance * 0.5f; //*
-                lines[i-1].GetComponent<RectTransform>().localEulerAngles = new Vector3(0.0f, 0.0f, UtilsClass.GetAngleFromVectorFloat(dir)); //*
-            }
-
-            prevPointObject = points[i];
-        }
-
+        imageRectTransform.sizeDelta = new Vector2(distance, 0.02f);
+        imageRectTransform.anchoredPosition = point1 + dir * distance * 0.5f;
+        imageRectTransform.localEulerAngles = new Vector3(0.0f, 0.0f, UtilsClass.GetAngleFromVectorFloat(dir));
     }
 
 }
