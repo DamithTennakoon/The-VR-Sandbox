@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 3d299638c3a764240b7d21c4e35522e7
+  - enabled: 1
+    path: Assets/Scenes/The Moon.unity
+    guid: 8fb0e5427ce0c4d5a9d7092f7fa64e02
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ad0976d3449944e5597b38fd47541528,
       type: 2}
