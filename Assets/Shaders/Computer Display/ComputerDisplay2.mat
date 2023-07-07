@@ -54,9 +54,9 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scroll_Speed: -0.1
+    - _Scroll_Speed: 1
     m_Colors:
     - _Fresnal_Colour: {r: 0.30315346, g: 0.038237333, b: 0.032889295, a: 0}
-    - _Hologram_Tiling: {r: 25, g: 25, b: 0, a: 0}
+    - _Hologram_Tiling: {r: -4, g: 5.27, b: 0, a: 0}
     - _Main_Colour: {r: 2.7671468, g: 0.06526289, b: 0.08995042, a: 0}
   m_BuildTextureStacks: []
