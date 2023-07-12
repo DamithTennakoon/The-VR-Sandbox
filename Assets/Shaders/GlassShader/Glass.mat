@@ -60,7 +60,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _DisortStrenght: 3
-    - _DisortStrength: 1.24
+    - _DisortStrength: 0.79
     - _DistortionOnTexture: 0.78
     - _Metalic: 0.246
     - _Metallic: 0
