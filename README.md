@@ -1,35 +1,43 @@
-# VR Sandbox Dev Notes
-## Drone Lab Development
-### Drone Mechanics Learning Space
-Create three boxed areas that has animated drones where each drone is placed in a box. Each box is accompanied with a 3D graph. In box 1, the drone will continuously perform roll maneuvers to show which axis is roll. The same will be done for pitch and yaw in the remaining boxes. 
 
-### Learning Desks
-#### Table 1
-Radio controller, motor, drone body, flight controller, transmitter and receiver.
-- Section off on the table with a 3D bobbing model of each explaining what they mean.
+# The VR Sandbox
 
-#### Table 2
-Selection table with electrical components: batteries, single set of motors.
-- Start with showing that adding 3 different batteries affect the drones ability to move. 
+The VR Sandbox is an virtual reality application that is desined to simulate real-world laboratories in STEM courses at the University level. The app enables students to be fully immersed into a virtual environment to perform various exercices and experiments. The VR Sandbox offers virtual tours of key landmarks, activities for building electrical circuits, exercises to learn about mechatronics. 
 
-#### Long Table
-Display different drone bodies. One drone body that can be interacted with.
+## Version 4: Drone Laboratory 
+### Purpose
+The purpose of the Drone Laboratory scene was to create a mechatronics laboratory for users to learn about drone components, flight mechanics, assembly processes, how to fly a drone using an RC controller, and about their applications in real-world scenarious such as usages in construction sites or safety inspections for structures such as bridges. 
 
-### General Notes
-`Date: June 26, 2023`
-The new table created in the drone lab is running basic materials overlaid with 4k normal maps:
-- Panels of the table - **Light Grey** material which has has the *aerial_asphalt_01_4k.blend* normal map.
-	- Causes high frame rate drop when rendered in-game.
-	- After testing, it was determined this was not the cause of the frame rate drops; the rover object was.
+### Development Process
+Their were some key strategies that were sought out to construct the mechatronics lab. They were planning the VR lab, desigining the lab in CAD, and programming interactive tools and real-world drone mechanics/physics. To elobaroate:
 
-### Attempted Bug Fixes
-Currently, it is unclear whether the drone and robotics props are causing the frame rate drop.
+    1. Generate images of general design of the virtual environment.
+    2. Specify key objects that needs to be modelled.
+    3. CAD model the virtual environment.
+    4. Debug models when exporting between various 3D environments.
+    5. Texture the virtual environment.
+    6. Program interactive tools and drone physics.
 
-- Turn on the drone, rover, and the headphones objects: frame rate increases to playable level.
-- Turn on the drone: frame rate is at a playable level.
-- Turn on the headphones: frame rate is at a playable level.
-- Turn on the rover: frame rate drops to an unplayable level.
+#### Planning the Virtual Laboratory 
+The planning process began by first thinking about what equipment and objects are usually found in mechatronics laboratory. Some objects are listed below:
 
-### General Sci-fi Tables
-- Center side frame: 12mm from centre and 18 away from centre.
-- Frame aspect ratio: 0.73
+- Work stations/tables.
+- Testing zone/arena.
+- Equipment and tools: 3D printers, robotic arms, etc.
+- Open space to move and work.
+
+It was also important to design a space where users would feel immersed and enaged to work in. For this reason, a traditional laboratory setting was not justified. Taking the infomation into account, online *AI art generators* were used to construct clippings of what a Sci-Fi space themed mechatronics/robotics laboratory. After sorting through many clippings, an ideal image was selected in preperation for CAD modelling.
+
+`AI Art Generator Tool:` https://playgroundai.com/
+
+#### CAD Modelling the Virtual Environment
+Once the general idea of what the laboratory was intended to look like and include was selected, the CAD modelling process began. 
+
+The CAD modelling software chosen for the object modelling was **Autodesk Fusion 360**. This modelling software was used as it is a very capable software, with many useful features and tool, provides educational licenses, and is compatible on both MacOS and Windows (enables cross-platform development). 
+
+As an example, one of the main requirements for the virtual environment was having workstations. CAD models of general workstations were performed. The process include first cerating an engineering sketch of the workstation, then performing extrusions, followed by exporting objects as filmbox (FBX) files. An example of the development a workstation's engieering sketch is shown below.
+
+![Workstation CAD Sketch](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/TestDroneLab/Assets/Info%20Images/CAD_Workstation.png)
+
+It is important to note that Unity (development environment for VR application) takes 3D models in the form of object (.obj) and FBX files. FBX was chosen as an itermediate step is required to correct the designed objects using the Blender 3D modelling software. Though Blender takes various 3D model files, it was found that FBX files were easiest to manage in the development pipeline.
+
+
