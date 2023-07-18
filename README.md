@@ -1,6 +1,7 @@
+
 # The VR Sandbox
 
-The VR Sandbox is an virtual reality application that is desined to simulate real-world laboratories in STEM courses at the University level. The app enables students to be fully immersed into a virtual environment to perform various exercices and experiments. The VR Sandbox offers virtual tours of key landmarks, activities for building electrical circuits, exercises to learn about mechatronics. 
+The VR Sandbox is an virtual reality application that is designed to simulate real-world laboratories in STEM courses at the University level. The app enables students to be fully immersed into a virtual environment to perform various exercices and experiments. The VR Sandbox offers virtual tours of key landmarks, activities for building electrical circuits, exercises to learn about mechatronics. 
 
 ## Version 4: Drone Laboratory 
 ### Purpose
@@ -78,3 +79,14 @@ Unity is game engine created by Unity Technologies. The engine is designed to cr
 
 `Unity:` https://unity.com/
 
+The objects, referred by Unity as "prefabs", are integrated into the 3D scene and assembled. This process consists of rescaling objects, positioning them accordingly, and adding colliders to them to ensure the objects are interactable. 
+
+**Disclaimer:** *It is important to note that VR development cannot be done natively in Unity. Packages from the Unity Package Manager must be installed for VR development. Many depenendencies must be properly imported and setup in the environment to begin developing with XR interaction toolkit.*
+
+`XR Interaction Toolkit:` https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@2.4/manual/index.html
+
+An example of the assembly process of prefabs in the 3D scene to construct the virtual environment is shown below:
+
+![Unity Scene: 3D View](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/TestDroneLab/Assets/Info%20Images/Unity_Scene.png)
+
+Once the desired 3D scene has been created and tested, interactive tools and scripting physics/behvaiour needs to created.
