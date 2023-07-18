@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ComputerDisplay
+  m_Name: ComputerDisplay 1
   m_Shader: {fileID: -6465566751694194690, guid: b8f26eb4d27344198beb1d8752dba51a,
     type: 3}
   m_ValidKeywords: []
@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Hologram_Scanlines:
-        m_Texture: {fileID: 2800000, guid: e8e259ac696804ac69dbb5d6f39a5483, type: 3}
+        m_Texture: {fileID: 2800000, guid: eff3140acf9b3411ba0b5912ed264326, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -41,11 +41,11 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scroll_Speed: -0.1
+    - _Scroll_Speed: 0.1
     m_Colors:
-    - _Fresnal_Colour: {r: 0.2722759, g: 0.034798868, b: 0.4339623, a: 0}
-    - _Hologram_Tiling: {r: 25, g: 25, b: 0, a: 0}
-    - _Main_Colour: {r: 0.3263446, g: 0.14121756, b: 1.419608, a: 0}
+    - _Fresnal_Colour: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 0}
+    - _Hologram_Tiling: {r: -5.22, g: -31.5, b: 0, a: 0}
+    - _Main_Colour: {r: 0.5946002, g: 3.270301, b: 5.678432, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6936191684403743417
 MonoBehaviour:
