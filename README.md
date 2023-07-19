@@ -99,7 +99,7 @@ Once the desired 3D scene has been created and tested, interactive tools and scr
 
 ### Programming Physics/Mechanics and Interaction Tools: C# 
 #### VR Hardware Programming
-One of the key parts of developing a VR application is coding intereactions tools in order to make use of the VR head mounted display (HMD), VR controllers, as well as make use of the objects within the virtual environment. When beginning a VR applicaiton, scripts must be written to listen for, inititiaze, and store object data of the HMD and the VR controllers. The VR rig controlls of VR Sandbox can be found in `Assets/C# Scripts/ContinousMovement.cs` and `Assets/C# Scripts/HandPresence.cs`. A snippet for code that enables the use of the VR controllers is shown below:
+One of the key parts of developing a VR application is coding intereactions tools in order to make use of the VR head mounted display (HMD), VR controllers, as well as make use of the objects within the virtual environment. When beginning a VR applicaiton, scripts must be written to listen for, inititiaze, and store object data of the HMD and the VR controllers. The VR rig controlls of VR Sandbox can be found in `Assets/C# Scripts/VR Rig Controls/ContinousMovement.cs` and `Assets/C# Scripts/VR Rig Controls/HandPresence.cs`. A snippet for code that enables the use of the VR controllers is shown below:
 
 **Code Snipet**
 
@@ -155,8 +155,17 @@ Unity's XR Interaction Toolkit provides useful VR interactions scripts that enab
 Although Unity provides an array of tools for XR development, many tools have to be custom built depending on the interactions required for the applications. One of the key tools that was necessary for an immersive education experience is a way to manipulate and visualize 3D objects by using hand motions and gestures. This tool was developed from scratch in the VR Sandbox application as the XR Interaction Toolkit was outdated and did not contain the visual tool necessary for the mechatronics lab. Updating the toolkit may cause issues with current scripts applied for the older toolkit that are applied on objects within the application. Additionally, since only a single tool was required, it made more sense to develop the tool in-house.
 
 **Development of Exploratory Visualization VR Gesture Tool**
+
 The goal of the Exploratory Visualization tool was to create a tool that enabled the user to inspect 3D objects in a way that provides a complete viewing experience of their model, observe the model in perspectives that cannot be done in any other form of visualization, and to be able to do it with ease. 
 
 This allows the user to rotate and scale and object in the VR environment to their liking by simply rotating and changing the distance between their handheld controllers. This tool is extremely intuitive and is a gesture that people beginner to using VR can comprehend.  An example of this tool applied to a 3D mondel of S9 drone is show below: 
 
 ![Visual Tool GIF](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/TestDroneLab/Assets/Info%20Images/VisualTool.gif)
+
+The first step in developing this tool was to listen for the serial data that is input from the controllers. Specifically, listening for when the right hand controller was initialized at the begining of the application. To do this, a list of type `Devices` object was created in order to save the located devices. 
+
+The second step listening for the left and right controller prefabs by tag name. The prefabs for the Oculus Touch Controllers (controller used for this applicaiton) was given the tag "VR Controller". The reason for this is that the transform for the 3D models of the controllers were needed to be accessed so by listening for instances of their objects, it can be saved as `GameObject` objects in this script. 
+
+The next step was checking checking the length of the Controllers object list per frame (void update() method) in order to ensure that the controller was connected during runtime. From here a method was written to grab the distance between the two transforms in 3D space per frame. The was saved a `float` object was reffered to as the `scale value`. This object, along with the `Vector3` objects that stored the 3D vector transforms of the controller prefabs were made public so that they can be accessed from a seperate C# script later on. There was also a `bool` type variable that stored the state of the primary button of the right hand controller, based on the serial data input from the VR system.
+
+Lastly, a scaling script was written to take the data computed above and apply it to the `localScale` parameter of a desired GameObject when the primary button was pressed (allows for the tool to be used only when wanted). Refer to the full scripts at `Assets/C# Scripts/VR Rig Controls/ControllerData.cs` and `Assets/C# Scripts/Effects/Scaling.cs`.
