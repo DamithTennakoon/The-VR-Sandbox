@@ -24,6 +24,9 @@ public class ControllerData : MonoBehaviour
     // Create a boolean to store primary button data
     public bool PrimaryButtonValue;
 
+    // Create a float object to store trigger button value
+    public float TriggerButtonValue;
+
 
     void Start()
     {
@@ -44,7 +47,7 @@ public class ControllerData : MonoBehaviour
         // If the device count of the searched controller is present, select that controller 
         if (Devices.Count > 0)
         {
-            // Instatiate the input device object 
+            // Instatiate the input device object (Right Controller)
             TargetDevice = Devices[0];
         
         }
@@ -69,8 +72,11 @@ public class ControllerData : MonoBehaviour
             ScaleValue = 1.0f;
         }
 
-        // Check if the primary button is pressed
+        // Check if the primary button is pressed and store its state
         TargetDevice.TryGetFeatureValue(CommonUsages.primaryButton, out PrimaryButtonValue);
+
+        // Check if the trigger buttom is pressed and store its value (normalized data)
+        TargetDevice.TryGetFeatureValue(CommonUsages.trigger, out TriggerButtonValue);
         
     }
 }
