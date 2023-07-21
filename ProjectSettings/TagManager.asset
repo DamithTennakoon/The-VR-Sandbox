@@ -9,6 +9,7 @@ TagManager:
   - Arduino
   - Graph Lines
   - Labels
+  - VR Controller
   layers:
   - Default
   - TransparentFX
