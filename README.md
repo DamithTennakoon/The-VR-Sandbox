@@ -169,3 +169,5 @@ The second step listening for the left and right controller prefabs by tag name.
 The next step was checking checking the length of the Controllers object list per frame (void update() method) in order to ensure that the controller was connected during runtime. From here a method was written to grab the distance between the two transforms in 3D space per frame. The was saved a `float` object was reffered to as the `scale value`. This object, along with the `Vector3` objects that stored the 3D vector transforms of the controller prefabs were made public so that they can be accessed from a seperate C# script later on. There was also a `bool` type variable that stored the state of the primary button of the right hand controller, based on the serial data input from the VR system.
 
 Lastly, a scaling script was written to take the data computed above and apply it to the `localScale` parameter of a desired GameObject when the primary button was pressed (allows for the tool to be used only when wanted). Refer to the full scripts at `Assets/C# Scripts/VR Rig Controls/ControllerData.cs` and `Assets/C# Scripts/Effects/Scaling.cs`.
+
+Testing TEsting
