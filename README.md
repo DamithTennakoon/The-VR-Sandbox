@@ -38,7 +38,7 @@ The CAD modelling software chosen for the object modelling was **Autodesk Fusion
 
 As an example, one of the main requirements for the virtual environment was having workstations. CAD models of general workstations were performed. The process include first cerating an engineering sketch of the workstation, then performing extrusions, followed by exporting objects as filmbox (FBX) files. An example of the development a workstation's engieering sketch is shown below.
 
-![Workstation CAD Sketch](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/TestDroneLab/Assets/Info%20Images/CAD_Workstation.png)
+![Workstation CAD Sketch](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/main/Assets/Info%20Images/CAD_Workstation.png)
 
 This process was continued for nearly all of the objects in the virtual environment. It is important to note that some objects were brought in from third party websites that offer free 3D models. These will be mentioned later on in the documentation.
 
@@ -66,7 +66,7 @@ To be specific, one of the commonly seen buggs is that exported Fusion 360 FBX m
 
 An example of an incorrect UV map is shown below:
 
-![Incorrect UV Map Image](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/TestDroneLab/Assets/Info%20Images/Incorrect_UV_Map.png)
+![Incorrect UV Map Image](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/main/Assets/Info%20Images/Incorrect_UV_Map.png)
 
 The above UV map is incorrect as the UVs of the object should first coherently in the grid frame on the left panel. The UVs of this object are natively larger than the frame of the map and so when textures are applied to this material, they will not be rendered correctly.
 
@@ -87,7 +87,7 @@ The objects, referred by Unity as "prefabs", are integrated into the 3D scene an
 
 An example of the assembly process of prefabs in the 3D scene to construct the virtual environment is shown below:
 
-![Unity Scene: 3D View](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/TestDroneLab/Assets/Info%20Images/Unity_Scene.png)
+![Unity Scene: 3D View](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/main/Assets/Info%20Images/Unity_Scene.png)
 
 Another important step for providing a realistic VR experience is creating an environment that resembles real world objects. The custom 3D models do not have any textures applied onto them but a base colour. For this reason, the objects should be textured to make them look more like their real-world counter part. For this project, 2K textures are used for objects as rendering multiple 4K textures in close proximity will cause performce drops. Soime textures are 4K in this project but most are 2K. The resources listed below were used to download textures:
 
@@ -160,7 +160,7 @@ The goal of the Exploratory Visualization tool was to create a tool that enabled
 
 This allows the user to rotate and scale and object in the VR environment to their liking by simply rotating and changing the distance between their handheld controllers. This tool is extremely intuitive and is a gesture that people beginner to using VR can comprehend.  An example of this tool applied to a 3D mondel of S9 drone is show below: 
 
-![Visual Tool GIF](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/TestDroneLab/Assets/Info%20Images/VisualTool.gif)
+![Visual Tool GIF](https://media.githubusercontent.com/media/DamithTennakoon/The-VR-Sandbox/main/Assets/Info%20Images/VisualTool.gif)
 
 The first step in developing this tool was to listen for the serial data that is input from the controllers. Specifically, listening for when the right hand controller was initialized at the begining of the application. To do this, a list of type `Devices` object was created in order to save the located devices. 
 
