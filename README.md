@@ -170,4 +170,4 @@ The next step was checking checking the length of the Controllers object list pe
 
 Lastly, a scaling script was written to take the data computed above and apply it to the `localScale` parameter of a desired GameObject when the primary button was pressed (allows for the tool to be used only when wanted). Refer to the full scripts at `Assets/C# Scripts/VR Rig Controls/ControllerData.cs` and `Assets/C# Scripts/Effects/Scaling.cs`.
 
-Testing TEsting
+#### Developing PID Controller for Drone
