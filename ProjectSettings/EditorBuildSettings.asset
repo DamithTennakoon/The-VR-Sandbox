@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: 3d299638c3a764240b7d21c4e35522e7
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 1cf9ecd11bc9c45ebbc13fee69e69300
   - enabled: 1
@@ -26,9 +29,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/The Moon.unity
     guid: 8fb0e5427ce0c4d5a9d7092f7fa64e02
-  - enabled: 1
-    path: Assets/Scenes/Test.unity
-    guid: 3d299638c3a764240b7d21c4e35522e7
   - enabled: 1
     path: Assets/Scenes/Drone Lab.unity
     guid: 6e8f448085aba4991ab67d1f6b07f0b4

@@ -29,10 +29,12 @@ public class DronePhysics : MonoBehaviour
     // Implement proportional controlller for Roll axis
     private float p_gain_pitch;
     private float p_gain_roll;
+    private float p_gain_yaw;
 
     // Sensor data objects
     public float PitchError;
     public float RollError;
+    public float YawError;
 
     // Create a object from ControllerData class
     public ControllerData InputData;
@@ -44,10 +46,13 @@ public class DronePhysics : MonoBehaviour
         // Initialize sensor data;
         PitchError = 0.0f;
         RollError = 0.0f;
+        YawError = 0.0f;
 
         // Initialize proportional gains
         p_gain_pitch = 10f;
-        p_gain_roll = 5f;
+        p_gain_roll = 2f;
+        p_gain_yaw = 6f;
+
 
         // Initialize distances between propes and centre of drone mass
         DistFrontRight = Vector3.Distance(FrontRight.transform.position, DroneTransform.position);
@@ -60,26 +65,26 @@ public class DronePhysics : MonoBehaviour
     void Update()
     {
         // Sensor data computation
-        //InputData.TriggerButtonValue = 0.8f;
+        InputData.TriggerButtonValue = 0.5f;
         PitchError = ComputePitchError(DroneTransform, PitchError);
         RollError = ComputeRollErorr(DroneTransform, RollError);
+        YawError = ComputeYawError(DroneTransform);
 
         // Add force to each propellor
-        //InputData.TriggerButtonValue = 0.8f;
-        Forces(InputData.TriggerButtonValue, FrontRight, FrontLeft, BackRight, BackLeft, p_gain_pitch, p_gain_roll, PitchError, RollError);
+        Forces(InputData.TriggerButtonValue, FrontRight, FrontLeft, BackRight, BackLeft, p_gain_pitch, p_gain_roll, p_gain_yaw, PitchError, RollError, YawError);
     }
 
     // TO-DO: Function: add force to rigid body
-    private void Forces(float TriggerValue, GameObject FR_Prop, GameObject FL_Prop, GameObject BR_Prop, GameObject BL_Prop, float p_gain_pitch, float p_gain_roll, float PitchError, float RollError)
+    private void Forces(float TriggerValue, GameObject FR_Prop, GameObject FL_Prop, GameObject BR_Prop, GameObject BL_Prop, float p_gain_pitch, float p_gain_roll, float p_gain_yaw,float PitchError, float RollError, float YawError)
     {
         // Temporary: float object to save force value
         float Force = 12f * TriggerValue;
 
         // Compute Pitch stabilization forces using propotional controller terms
-        float FR_Force = Force + (PitchError) * p_gain_pitch - (RollError) * p_gain_roll;
-        float FL_Force = Force + (PitchError) * p_gain_pitch + (RollError) * p_gain_roll;
-        float BR_Force = Force - (PitchError) * p_gain_pitch - (RollError) * p_gain_roll;
-        float BL_Force = Force - (PitchError) * p_gain_pitch + (RollError) * p_gain_roll;
+        float FR_Force = Force + ((PitchError) * p_gain_pitch) - ((RollError) * p_gain_roll) - ((YawError) * p_gain_yaw);
+        float FL_Force = Force + ((PitchError) * p_gain_pitch) + ((RollError) * p_gain_roll) + ((YawError) * p_gain_yaw);
+        float BR_Force = Force - ((PitchError) * p_gain_pitch) - ((RollError) * p_gain_roll) + ((YawError) * p_gain_yaw);
+        float BL_Force = Force - ((PitchError) * p_gain_pitch) + ((RollError) * p_gain_roll) - ((YawError) * p_gain_yaw);
 
         // Compute Roll stabilization forces using proportional conntroller terms
 
@@ -121,5 +126,12 @@ public class DronePhysics : MonoBehaviour
         return RollError;
     }
 
-    // Adding code
+    // Function: Return the yaw angle of the drone
+    private float ComputeYawError(Transform DroneTransform)
+    {
+        // Calculate the current rotation of the transform
+        float YawError = -1 * DroneTransform.rotation.y;
+
+        return YawError;
+    }
 }
