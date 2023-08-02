@@ -36,10 +36,13 @@ public class DronePhysics : MonoBehaviour
     public float RollError;
     public float YawError;
 
+    // Derivative controller objects
+    public float PitchErrorRate;
+    public float PreviousPitchError;
+    public float dt;
+
     // Create a object from ControllerData class
     public ControllerData InputData;
-
-
 
     void Start()
     {
@@ -49,10 +52,14 @@ public class DronePhysics : MonoBehaviour
         YawError = 0.0f;
 
         // Initialize proportional gains
-        p_gain_pitch = 10f;
+        p_gain_pitch = 25f;
         p_gain_roll = 2f;
         p_gain_yaw = 6f;
 
+        // Initialize derivate controller object values
+        PitchErrorRate = 0.0f;
+        PreviousPitchError = 0.0f;
+        dt = 0.01f;
 
         // Initialize distances between propes and centre of drone mass
         DistFrontRight = Vector3.Distance(FrontRight.transform.position, DroneTransform.position);
@@ -64,14 +71,19 @@ public class DronePhysics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         // Sensor data computation
-        InputData.TriggerButtonValue = 0.5f;
-        PitchError = ComputePitchError(DroneTransform, PitchError);
-        RollError = ComputeRollErorr(DroneTransform, RollError);
+        InputData.TriggerButtonValue = 0.56f;
+        PitchError = ComputePitchError(DroneTransform);
+        RollError = ComputeRollErorr(DroneTransform);
         YawError = ComputeYawError(DroneTransform);
+
+        // Compute error rates
+        PitchErrorRate = ComputePitchErrorRate(PreviousPitchError, PitchError, dt);
 
         // Add force to each propellor
         Forces(InputData.TriggerButtonValue, FrontRight, FrontLeft, BackRight, BackLeft, p_gain_pitch, p_gain_roll, p_gain_yaw, PitchError, RollError, YawError);
+
     }
 
     // TO-DO: Function: add force to rigid body
@@ -109,16 +121,16 @@ public class DronePhysics : MonoBehaviour
     }
 
     // Function: Return the pitch angle of the drone
-    private float ComputePitchError(Transform DroneTransform, float PitchError)
+    private float ComputePitchError(Transform DroneTransform)
     {
         // Caculate the current rotation of the transform
-        PitchError = -1*DroneTransform.rotation.x;
+        float CurPitchError = -1*DroneTransform.rotation.x;
 
-        return PitchError;
+        return CurPitchError;
     }
 
     // Function: Return the roll angle of the drone
-    private float ComputeRollErorr(Transform DroneTransform, float RollError)
+    private float ComputeRollErorr(Transform DroneTransform)
     {
         // Calculate the current rotation of the transform
         RollError = -1*DroneTransform.rotation.z;
@@ -133,5 +145,17 @@ public class DronePhysics : MonoBehaviour
         float YawError = -1 * DroneTransform.rotation.y;
 
         return YawError;
+    }
+
+    // Function: Return the error rate of the pitch axis
+    private float ComputePitchErrorRate(float PreviousError, float CurrentError, float dt)
+    {
+        // Compute error rate
+        float ErrorRate = (PreviousError - CurrentError) / dt;
+
+        // Update error values
+        PreviousPitchError = CurrentError;
+
+        return ErrorRate;
     }
 }

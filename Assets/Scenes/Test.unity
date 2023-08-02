@@ -19916,6 +19916,9 @@ MonoBehaviour:
   PitchError: 0
   RollError: 0
   YawError: 0
+  PitchErrorRate: 0
+  PreviousPitchError: 0
+  dt: 0
   InputData: {fileID: 1066832228}
 --- !u!114 &797168444
 MonoBehaviour:
