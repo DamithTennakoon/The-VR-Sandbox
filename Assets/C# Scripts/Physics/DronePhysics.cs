@@ -64,9 +64,7 @@ public class DronePhysics : MonoBehaviour
         p_gain_yaw = 6f;
 
         // Initialize derivative gains
-        //d_gain_pitch = 0.5f;
         d_gain_pitch = 0.5f;
-        //d_gain_roll = 0.005f;
         d_gain_roll = 0.005f;
 
         // Initialize derivate controller object values
@@ -88,7 +86,7 @@ public class DronePhysics : MonoBehaviour
     {
         
         // Sensor data computation
-        InputData.TriggerButtonValue = 0.52f;
+        //InputData.TriggerButtonValue = 0.52f;
         PitchError = ComputePitchError(DroneTransform);
         RollError = ComputeRollErorr(DroneTransform);
         YawError = ComputeYawError(DroneTransform);
@@ -106,7 +104,9 @@ public class DronePhysics : MonoBehaviour
     private void Forces(float TriggerValue, GameObject FR_Prop, GameObject FL_Prop, GameObject BR_Prop, GameObject BL_Prop, float p_gain_pitch, float p_gain_roll, float p_gain_yaw, float d_gain_pitch, float d_gain_roll, float PitchError, float RollError, float YawError, float PitchErrorRate, float RollErrorRate)
     {
         // Temporary: float object to save force value
-        float Force = 12f * TriggerValue;
+        float Force = 10f * TriggerValue;
+        float RollControlForce = 0.5f;
+        float PitchControlForce = 4.0f;
 
         // Add force to each rotor
         float FR_Force = Force;
@@ -126,6 +126,15 @@ public class DronePhysics : MonoBehaviour
         BR_Force = BR_Force + ((PitchErrorRate) * d_gain_pitch) + ((RollErrorRate) * d_gain_roll);
         BL_Force = BL_Force + ((PitchErrorRate) * d_gain_pitch) - ((RollErrorRate) * d_gain_roll);
 
+        // Flight controlls
+        float PitchInput = InputData.RightJoystick[1];
+        float RollInput = InputData.RightJoystick[0];
+
+        FR_Force = FR_Force - ((PitchControlForce) * (PitchInput)) - ((RollControlForce) * (RollInput));
+        FL_Force = FL_Force - ((PitchControlForce) * (PitchInput)) + ((RollControlForce) * (RollInput));
+        BR_Force = BR_Force + ((PitchControlForce) * (PitchInput)) - ((RollControlForce) * (RollInput));
+        BL_Force = BL_Force + ((PitchControlForce) * (PitchInput)) + ((RollControlForce) * (RollInput));
+
         // Add force to propellor object
         DroneRigidBody.AddForceAtPosition(transform.up * FR_Force, FR_Prop.transform.position);
         DroneRigidBody.AddForceAtPosition(transform.up * FL_Force, FL_Prop.transform.position);
@@ -143,6 +152,7 @@ public class DronePhysics : MonoBehaviour
         DroneRigidBody.AddTorque(transform.up * FL_Torque);
         DroneRigidBody.AddTorque(transform.up * BR_Torque);
         DroneRigidBody.AddTorque(transform.up * BL_Torque);
+
 
     }
 

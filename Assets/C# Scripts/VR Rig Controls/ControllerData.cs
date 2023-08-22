@@ -27,6 +27,8 @@ public class ControllerData : MonoBehaviour
     // Create a float object to store trigger button value
     public float TriggerButtonValue;
 
+    // Create a Vector2 object to store the 2D-axis values
+    public Vector2 RightJoystick;
 
     void Start()
     {
@@ -39,6 +41,7 @@ public class ControllerData : MonoBehaviour
         // Create a list contaianing all detected devices
         List<InputDevice> Devices = new List<InputDevice>();
 
+        // Listen for the right-hand controller
         InputDeviceCharacteristics RightControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
 
         // Get the right controller from the devices list and save that as the new list of devices
@@ -77,6 +80,8 @@ public class ControllerData : MonoBehaviour
 
         // Check if the trigger buttom is pressed and store its value (normalized data)
         TargetDevice.TryGetFeatureValue(CommonUsages.trigger, out TriggerButtonValue);
-        
+
+        // Read the primary 2D axis values and store it into a vector
+        TargetDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out RightJoystick);
     }
 }
