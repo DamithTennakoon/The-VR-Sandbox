@@ -34,6 +34,7 @@ public class DronePhysics : MonoBehaviour
     // Implement derivative gains
     private float d_gain_pitch;
     private float d_gain_roll;
+    private float d_gain_yaw;
 
     // Sensor data objects
     public float PitchError;
@@ -44,8 +45,10 @@ public class DronePhysics : MonoBehaviour
     // Derivative controller objects
     public float PitchErrorRate;
     public float RollErrorRate;
+    public float YawErrorRate;
     public float PreviousPitchError;
     public float PreviousRollError;
+    public float PreviousYawError;
     public float dt;
 
     // Create a object from ControllerData class
@@ -65,12 +68,14 @@ public class DronePhysics : MonoBehaviour
 
         // Initialize derivative gains
         d_gain_pitch = 0.5f;
-        d_gain_roll = 0.005f;
+        d_gain_roll = 0.05f;
+        d_gain_yaw = 0.05f;
 
         // Initialize derivate controller object values
         PitchErrorRate = 0.0f;
         RollErrorRate = 0.0f;
         PreviousPitchError = 0.0f;
+        PreviousRollError = 0.0f;
         PreviousRollError = 0.0f;
         dt = 0.01f;
 
@@ -94,19 +99,21 @@ public class DronePhysics : MonoBehaviour
         // Compute error rates
         PitchErrorRate = ComputePitchErrorRate(PreviousPitchError, PitchError, dt);
         RollErrorRate = ComputeRollErrorRate(PreviousRollError, RollError, dt);
+        YawErrorRate = ComputeYawErrorRate(PreviousYawError, YawError, dt);
 
         // Add force to each propellor
-        Forces(InputData.TriggerButtonValue, FrontRight, FrontLeft, BackRight, BackLeft, p_gain_pitch, p_gain_roll, p_gain_yaw, d_gain_pitch, d_gain_roll, PitchError, RollError, YawError, PitchErrorRate, RollErrorRate);
+        Forces(InputData.TriggerButtonValue, FrontRight, FrontLeft, BackRight, BackLeft, p_gain_pitch, p_gain_roll, p_gain_yaw, d_gain_pitch, d_gain_roll, d_gain_yaw, PitchError, RollError, YawError, PitchErrorRate, RollErrorRate, YawErrorRate);
 
     }
 
     // TO-DO: Function: add force to rigid body
-    private void Forces(float TriggerValue, GameObject FR_Prop, GameObject FL_Prop, GameObject BR_Prop, GameObject BL_Prop, float p_gain_pitch, float p_gain_roll, float p_gain_yaw, float d_gain_pitch, float d_gain_roll, float PitchError, float RollError, float YawError, float PitchErrorRate, float RollErrorRate)
+    private void Forces(float TriggerValue, GameObject FR_Prop, GameObject FL_Prop, GameObject BR_Prop, GameObject BL_Prop, float p_gain_pitch, float p_gain_roll, float p_gain_yaw, float d_gain_pitch, float d_gain_roll, float d_gain_yaw, float PitchError, float RollError, float YawError, float PitchErrorRate, float RollErrorRate, float YawErrorRate)
     {
         // Temporary: float object to save force value
         float Force = 12f * TriggerValue;
         float RollControlForce = 0.3f;
         float PitchControlForce = 4.0f;
+        float YawControlForce = 2.0f;
 
         // Add force to each rotor
         float FR_Force = Force;
@@ -120,20 +127,29 @@ public class DronePhysics : MonoBehaviour
         BR_Force = BR_Force - ((PitchError) * p_gain_pitch) - ((RollError) * p_gain_roll) + ((YawError) * p_gain_yaw);
         BL_Force = BL_Force - ((PitchError) * p_gain_pitch) + ((RollError) * p_gain_roll) - ((YawError) * p_gain_yaw);
 
-        // Compute Pitch stabilization forces using derivate controller terms
-        FR_Force = FR_Force - ((PitchErrorRate) * d_gain_pitch) + ((RollErrorRate) * d_gain_roll);
-        FL_Force = FL_Force - ((PitchErrorRate) * d_gain_pitch) - ((RollErrorRate) * d_gain_roll);
-        BR_Force = BR_Force + ((PitchErrorRate) * d_gain_pitch) + ((RollErrorRate) * d_gain_roll);
-        BL_Force = BL_Force + ((PitchErrorRate) * d_gain_pitch) - ((RollErrorRate) * d_gain_roll);
+        // Compute Pitch, Roll, and Yaw stabilization forces using derivate controller terms
+        FR_Force = FR_Force - ((PitchErrorRate) * d_gain_pitch) + ((RollErrorRate) * d_gain_roll) + ((YawErrorRate) * d_gain_yaw);
+        FL_Force = FL_Force - ((PitchErrorRate) * d_gain_pitch) - ((RollErrorRate) * d_gain_roll) - ((YawErrorRate) * d_gain_yaw);
+        BR_Force = BR_Force + ((PitchErrorRate) * d_gain_pitch) + ((RollErrorRate) * d_gain_roll) - ((YawErrorRate) * d_gain_yaw);
+        BL_Force = BL_Force + ((PitchErrorRate) * d_gain_pitch) - ((RollErrorRate) * d_gain_roll) + ((YawErrorRate) * d_gain_yaw);
 
         // Flight controlls
         float PitchInput = InputData.RightJoystick[1];
         float RollInput = InputData.RightJoystick[0];
+        float YawRightInput = (InputData.SecondaryButtonValue) ? 1.0f : 0.0f; // Conditional statement to convert bool -> float
+        float YawLeftInput = (InputData.PrimaryButtonValue) ? 1.0f : 0.0f;
 
+        // Manual pitch and roll control
         FR_Force = FR_Force - ((PitchControlForce) * (PitchInput)) - ((RollControlForce) * (RollInput));
         FL_Force = FL_Force - ((PitchControlForce) * (PitchInput)) + ((RollControlForce) * (RollInput));
         BR_Force = BR_Force + ((PitchControlForce) * (PitchInput)) - ((RollControlForce) * (RollInput));
         BL_Force = BL_Force + ((PitchControlForce) * (PitchInput)) + ((RollControlForce) * (RollInput));
+
+        // Manual yaw control
+        FR_Force = FR_Force + ((YawControlForce) * (YawRightInput)) - ((YawControlForce) * (YawLeftInput));
+        FL_Force = FL_Force - ((YawControlForce) * (YawRightInput)) + ((YawControlForce) * (YawLeftInput));
+        BR_Force = BR_Force - ((YawControlForce) * (YawRightInput)) + ((YawControlForce) * (YawLeftInput));
+        BL_Force = BL_Force + ((YawControlForce) * (YawRightInput)) - ((YawControlForce) * (YawLeftInput));
 
         // Add force to propellor object
         DroneRigidBody.AddForceAtPosition(transform.up * FR_Force, FR_Prop.transform.position);
@@ -203,6 +219,18 @@ public class DronePhysics : MonoBehaviour
 
         // Update error values
         PreviousRollError = CurrentError;
+
+        return ErrorRate;
+    }
+
+    // Function: Return the error rate of the roll axis
+    private float ComputeYawErrorRate(float PreviousError, float CurrentError, float dt)
+    {
+        // Compute error rate
+        float ErrorRate = (PreviousError - CurrentError) / dt;
+
+        // Update error values
+        PreviousYawError = CurrentError;
 
         return ErrorRate;
     }

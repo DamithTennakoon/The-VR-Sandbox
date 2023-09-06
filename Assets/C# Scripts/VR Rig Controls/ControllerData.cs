@@ -24,6 +24,9 @@ public class ControllerData : MonoBehaviour
     // Create a boolean to store primary button data
     public bool PrimaryButtonValue;
 
+    // Create a boolean to store secondary button data
+    public bool SecondaryButtonValue;
+        
     // Create a float object to store trigger button value
     public float TriggerButtonValue;
 
@@ -83,5 +86,8 @@ public class ControllerData : MonoBehaviour
 
         // Read the primary 2D axis values and store it into a vector
         TargetDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out RightJoystick);
+
+        // Check and save the value of the second button
+        TargetDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out SecondaryButtonValue);
     }
 }

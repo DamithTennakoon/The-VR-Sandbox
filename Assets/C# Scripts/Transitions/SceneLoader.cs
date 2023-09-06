@@ -42,4 +42,10 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    // TEMPORARY FOR DEMO - DRONE LAB CITY RESET
+    public void ResetCity()
+    {
+        SceneManager.LoadScene(1);
+    }
 }
