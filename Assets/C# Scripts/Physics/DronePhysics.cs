@@ -104,8 +104,8 @@ public class DronePhysics : MonoBehaviour
     private void Forces(float TriggerValue, GameObject FR_Prop, GameObject FL_Prop, GameObject BR_Prop, GameObject BL_Prop, float p_gain_pitch, float p_gain_roll, float p_gain_yaw, float d_gain_pitch, float d_gain_roll, float PitchError, float RollError, float YawError, float PitchErrorRate, float RollErrorRate)
     {
         // Temporary: float object to save force value
-        float Force = 10f * TriggerValue;
-        float RollControlForce = 0.5f;
+        float Force = 12f * TriggerValue;
+        float RollControlForce = 0.3f;
         float PitchControlForce = 4.0f;
 
         // Add force to each rotor
